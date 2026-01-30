@@ -1,0 +1,106 @@
+<div class="register-wrapper">
+  <div class="register-card">
+    <h2>Create Account</h2>
+
+    <form (ngSubmit)="onRegister(registerForm)" #registerForm="ngForm">
+      <!-- First & Last Name -->
+      <div class="input-row">
+        <div class="input-group">
+          <label>First Name</label>
+          <input
+            type="text"
+            placeholder="John"
+            name="firstName"
+            [(ngModel)]="registerData.firstName"
+            required
+            #firstName="ngModel"
+            #firstNameInput
+          />
+          <small class="error" *ngIf="firstName.invalid && firstName.touched">
+            First name is required
+          </small>
+        </div>
+
+        <div class="input-group">
+          <label>Last Name</label>
+          <input
+            type="text"
+            placeholder="Doe"
+            name="lastName"
+            [(ngModel)]="registerData.lastName"
+            required
+            #lastName="ngModel"
+          />
+          <small class="error" *ngIf="lastName.invalid && lastName.touched">
+            Last name is required
+          </small>
+        </div>
+      </div>
+
+      <!-- Username -->
+      <div class="input-group">
+        <label>Username</label>
+        <input
+          type="text"
+          placeholder="john_doe"
+          name="username"
+          [(ngModel)]="registerData.username"
+          required
+          #username="ngModel"
+        />
+        <small class="error" *ngIf="username.touched && username.invalid">
+          Username is required
+        </small>
+      </div>
+
+      <!-- Email -->
+      <div class="input-group">
+        <label>Email</label>
+        <input
+          type="email"
+          placeholder="john@example.com"
+          name="email"
+          [(ngModel)]="registerData.email"
+          required
+          email
+          #email="ngModel"
+        />
+        <small class="error" *ngIf="email.touched && email.invalid">
+          Enter a valid email address
+        </small>
+      </div>
+
+      <!-- Password -->
+      <div class="input-group password-group">
+        <label>Password</label>
+
+        <div class="password-wrapper">
+          <input
+            [type]="showRegisterPassword ? 'text' : 'password'"
+            placeholder="••••••••"
+            name="password"
+            [(ngModel)]="registerData.password"
+            required
+            #password="ngModel"
+          />
+
+          <span class="toggle-icon" (click)="toggleRegisterPassword()">
+            {{ showRegisterPassword ? "Hide" : "Show" }}
+          </span>
+        </div>
+
+        <small class="error" *ngIf="password.touched && password.invalid">
+          Password is required
+        </small>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" [disabled]="registerForm.invalid">Register</button>
+
+      <p class="login-link">
+        Already have an account?
+        <a routerLink="/login">Login</a>
+      </p>
+    </form>
+  </div>
+</div>

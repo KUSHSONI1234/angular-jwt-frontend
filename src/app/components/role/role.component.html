@@ -1,0 +1,67 @@
+<div class="page-header">
+  <h2 class="page-title">Role List</h2>
+
+  <button class="create-btn" routerLink="/dashboard/roles/add">
+    <span class="plus">+</span>
+    Create New
+  </button>
+</div>
+
+<div class="table-wrapper">
+  <table class="user-table">
+    <thead>
+      <tr>
+        <th>Role Name</th>
+        <th>Status</th>
+        <th class="actions-col">Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngIf="loading">
+        <td colspan="3" style="text-align: center">Loading roles...</td>
+      </tr>
+
+      <tr *ngFor="let role of roles">
+        <td>{{ role.roleName }}</td>
+
+        <td>
+          <span
+            class="status"
+            [ngClass]="role.isActive ? 'active' : 'blocked'"
+            (click)="toggleStatus(role)"
+            style="cursor: pointer"
+            title="Click to toggle status"
+          >
+            {{ role.isActive ? "Active" : "Inactive" }}
+          </span>
+        </td>
+
+        <td class="actions">
+          <span
+            class="material-icons icon view"
+            title="View"
+            (click)="viewRole(role)"
+            >visibility</span
+          >
+          <span
+            class="material-icons icon edit"
+            title="Edit"
+            (click)="editRole(role)"
+            >edit</span
+          >
+          <span
+            class="material-icons icon delete"
+            title="Delete"
+            (click)="deleteRole(role)"
+            >delete</span
+          >
+        </td>
+      </tr>
+
+      <tr *ngIf="!loading && roles.length === 0">
+        <td colspan="3" style="text-align: center">No roles found</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

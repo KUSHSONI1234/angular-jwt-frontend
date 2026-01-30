@@ -1,0 +1,51 @@
+<!-- NAVBAR (your existing code, unchanged) -->
+<nav class="dashboard-navbar">
+  <div class="nav-left">
+    <span class="brand">MyAngularApp</span>
+  </div>
+
+  <div class="nav-right">
+    <span class="username">
+      {{ username }}
+      <span class="role">({{ roleName }})</span>
+    </span>
+
+    <button class="logout-btn" (click)="logout()">Logout</button>
+  </div>
+</nav>
+
+<!-- MAIN LAYOUT -->
+<div class="dashboard-layout">
+  <aside class="sidebar">
+    <ul class="sidebar-menu">
+      <!-- DASHBOARD -->
+      <li [ngClass]="{ active: router.url === '/dashboard' }">
+        <a routerLink="/dashboard">Dashboard</a>
+      </li>
+
+      <!-- MASTER -->
+      <li>
+        <div class="dropdown-toggle" (click)="toggleMaster()">
+          Master
+          <span class="arrow" [class.rotate]="isMasterOpen">▾</span>
+        </div>
+
+        <ul class="dropdown-menu" [class.open]="isMasterOpen">
+          <!-- Users -->
+          <li [ngClass]="{ active: router.url === '/dashboard/users' }">
+            <a routerLink="/dashboard/users">Users</a>
+          </li>
+
+          <!-- Roles -->
+          <li [ngClass]="{ active: router.url === '/dashboard/roles' }">
+            <a routerLink="/dashboard/roles">Roles</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </aside>
+
+  <main class="dashboard-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

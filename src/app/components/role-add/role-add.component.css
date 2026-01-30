@@ -1,0 +1,132 @@
+/* FORM WRAPPER */
+.form-wrapper {
+  max-width: 500px;
+  margin: 20px auto 0;
+}
+
+/* TITLE */
+.form-title {
+  font-size: 22px;
+  font-weight: 600;
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 16px;
+}
+
+/* FORM CARD */
+.user-form {
+  padding: 22px;
+  border-radius: 18px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(30, 41, 59, 0.85),
+    rgba(2, 6, 23, 0.95)
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* FORM GROUP */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-size: 14px;
+  color: #c7d2fe;
+  margin-bottom: 6px;
+}
+
+/* INPUT */
+.form-group input {
+  height: 44px;
+  padding: 0 14px;
+
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  background: rgba(2, 6, 23, 0.8);
+  color: #ffffff;
+  font-size: 15px;
+
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+.form-group input::placeholder {
+  color: #6b7280;
+}
+
+.form-group input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25);
+}
+
+/* ACTIONS */
+.form-actions {
+  margin-top: 26px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* PRIMARY BUTTON */
+.btn-primary {
+  padding: 10px 22px;
+  border-radius: 10px;
+  border: none;
+
+  background: linear-gradient(135deg, #4b46c5, #3f3bb8);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-primary:hover:not([disabled]) {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
+}
+
+/* SECONDARY BUTTON */
+.btn-secondary {
+  padding: 10px 20px;
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e5e7eb;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* ERROR */
+.error {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* INVALID INPUT */
+input.ng-invalid.ng-touched {
+  border-color: #dc3545;
+}
+
+/* DISABLED BUTTON */
+button[disabled] {
+  background: #a5a5a5;
+  cursor: not-allowed;
+  opacity: 0.7;
+}

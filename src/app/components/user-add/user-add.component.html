@@ -1,0 +1,160 @@
+<h2 class="form-title">
+  {{
+    mode === "add" ? "Create User" : mode === "edit" ? "Edit User" : "View User"
+  }}
+</h2>
+
+<div class="form-wrapper">
+  <form class="user-form" #userForm="ngForm" (ngSubmit)="onSave()">
+    <!-- First & Last Name -->
+    <div class="form-row">
+      <div class="form-group">
+        <label>First Name</label>
+        <input
+          type="text"
+          placeholder="Enter first name"
+          name="firstName"
+          [(ngModel)]="userData.firstName"
+          required
+          #firstName="ngModel"
+          #firstNameInput
+          [readonly]="mode === 'view'"
+        />
+        <small
+          class="error"
+          *ngIf="firstName.touched && firstName.invalid && mode !== 'view'"
+        >
+          First name is required
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label>Last Name</label>
+        <input
+          type="text"
+          placeholder="Enter last name"
+          name="lastName"
+          [(ngModel)]="userData.lastName"
+          required
+          #lastName="ngModel"
+          [readonly]="mode === 'view'"
+        />
+        <small
+          class="error"
+          *ngIf="lastName.touched && lastName.invalid && mode !== 'view'"
+        >
+          Last name is required
+        </small>
+      </div>
+    </div>
+
+    <!-- Username & Email -->
+    <div class="form-row">
+      <div class="form-group">
+        <label>Username</label>
+        <input
+          type="text"
+          placeholder="Enter username"
+          name="username"
+          [(ngModel)]="userData.username"
+          required
+          #username="ngModel"
+          [readonly]="mode === 'view'"
+        />
+        <small
+          class="error"
+          *ngIf="username.touched && username.invalid && mode !== 'view'"
+        >
+          Username is required
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input
+          type="email"
+          placeholder="Enter email address"
+          name="email"
+          [(ngModel)]="userData.email"
+          required
+          email
+          #email="ngModel"
+          [readonly]="mode === 'view'"
+        />
+        <small
+          class="error"
+          *ngIf="email.touched && email.invalid && mode !== 'view'"
+        >
+          Enter a valid email
+        </small>
+      </div>
+    </div>
+
+    <!-- Password (only for add/edit) -->
+    <div class="form-group password-group">
+      <label>Password</label>
+
+      <div class="password-wrapper">
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          placeholder="********"
+          name="password"
+          [(ngModel)]="userData.password"
+          [readonly]="mode === 'view'"
+        />
+
+        <span
+          class="toggle-icon"
+          *ngIf="mode !== 'view'"
+          (click)="togglePassword()"
+        >
+          {{ showPassword ? "Hide" : "Show" }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Role -->
+    <div class="form-group">
+      <label>Role</label>
+      <select
+        class="form-control"
+        name="roleId"
+        [(ngModel)]="userData.roleId"
+        required
+        [disabled]="mode === 'view'"
+      >
+        <option [ngValue]="null">-- Select Role --</option>
+        <option
+          *ngFor="let role of roles"
+          [ngValue]="role.id"
+          [disabled]="role.disabled"
+        >
+          {{ role.roleName }}
+        </option>
+      </select>
+
+      <small
+        class="error"
+        *ngIf="userForm.submitted && !userData.roleId && mode !== 'view'"
+      >
+        Role is required
+      </small>
+    </div>
+
+    <!-- Actions -->
+    <div class="form-actions">
+      <button type="button" class="btn-secondary" routerLink="/dashboard/users">
+        {{ mode === "view" ? "Back" : "Cancel" }}
+      </button>
+
+      <button
+        type="submit"
+        class="btn-primary"
+        [disabled]="userForm.invalid"
+        *ngIf="mode !== 'view'"
+      >
+        {{ mode === "add" ? "Save User" : "Update User" }}
+      </button>
+    </div>
+  </form>
+</div>

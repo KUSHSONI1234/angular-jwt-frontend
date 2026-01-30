@@ -1,0 +1,56 @@
+<div class="register-wrapper">
+  <div class="register-card">
+    <h2>Welcome Back</h2>
+
+    <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm)">
+      <!-- Username -->
+      <div class="input-group">
+        <label>Username</label>
+        <input
+          type="text"
+          name="username"
+          placeholder="john_doe"
+          [(ngModel)]="loginData.username"
+          required
+          #username="ngModel"
+          #usernameInput
+        />
+        <small class="error" *ngIf="username.touched && username.invalid">
+          Username is required
+        </small>
+      </div>
+
+      <!-- Password -->
+      <div class="input-group password-group">
+        <label>Password</label>
+
+        <div class="password-wrapper">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            name="password"
+            placeholder="•••••••"
+            [(ngModel)]="loginData.password"
+            required
+            #password="ngModel"
+          />
+
+          <span class="toggle-icon" (click)="togglePassword()">
+            {{ showPassword ? "Hide" : "Show" }}
+          </span>
+        </div>
+
+        <small class="error" *ngIf="password.touched && password.invalid">
+          Password is required
+        </small>
+      </div>
+
+      <button type="submit" [disabled]="loginForm.invalid">Login</button>
+
+      <p class="login-link">
+        Don’t have an account?
+        <a routerLink="/register">Register</a>
+      </p>
+    </form>
+
+  </div>
+</div>

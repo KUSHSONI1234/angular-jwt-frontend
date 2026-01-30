@@ -1,0 +1,244 @@
+/* FORM WRAPPER */
+.form-wrapper {
+  max-width: 650px;
+  margin: 10px auto 0;
+}
+
+/* FORM TITLE */
+.form-title {
+  font-size: 22px;
+  font-weight: 600;
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 16px;
+}
+
+/* FORM CARD */
+.user-form {
+  padding: 20px;
+  border-radius: 18px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(30, 41, 59, 0.85),
+    rgba(2, 6, 23, 0.95)
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* FORM ROW (FIRST + LAST NAME) */
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+/* FORM GROUP */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+  flex: 1;
+}
+
+.form-group label {
+  font-size: 14px;
+  color: #c7d2fe;
+  margin-bottom: 6px;
+}
+
+/* INPUT */
+.form-group input {
+  height: 44px;
+  padding: 0 14px;
+
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  background: rgba(2, 6, 23, 0.8);
+  color: #ffffff;
+  font-size: 15px;
+
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+.form-group input::placeholder {
+  color: #6b7280;
+}
+
+.form-group input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25);
+}
+
+/* ACTION BUTTONS */
+.form-actions {
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* PRIMARY BUTTON */
+.btn-primary {
+  padding: 10px 22px;
+  border-radius: 10px;
+  border: none;
+
+  /* Darker gradient background */
+  background: linear-gradient(135deg, #4b46c5, #3f3bb8);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* Hover effect with theme-friendly color */
+.btn-primary:hover {
+  background: linear-gradient(
+    135deg,
+    #6366f1,
+    #4f46e5
+  ); /* Your original gradient */
+}
+
+/* SECONDARY BUTTON */
+.btn-secondary {
+  padding: 10px 20px;
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e5e7eb;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Error messages below inputs */
+.error {
+  color: #dc3545; /* red color */
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+  font-weight: 500;
+}
+
+input.ng-invalid.ng-touched {
+  border: 1px solid #dc3545;
+  animation: shake 0.15s;
+}
+
+/* Shake animation */
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-2px);
+  }
+  50% {
+    transform: translateX(2px);
+  }
+  75% {
+    transform: translateX(-2px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Disabled submit button */
+button[disabled] {
+  background: #a5a5a5; /* gray background */
+  cursor: not-allowed;
+  color: #f0f0f0;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+/* Optional: hover effect for enabled button */
+button:not([disabled]):hover {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 60px;
+}
+
+.toggle-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 12px;
+  color: #007bff;
+  user-select: none;
+}
+
+.toggle-icon:hover {
+  text-decoration: underline;
+}
+
+.form-group select.form-control {
+  height: 44px;
+  padding: 0 14px;
+
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  background: rgba(2, 6, 23, 0.8);
+  color: #ffffff;
+  font-size: 15px;
+
+  outline: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  /* Remove default browser arrow */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  /* Custom dropdown arrow */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 20 20'%3E%3Cpath d='M5.5 7.5L10 12l4.5-4.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 14px;
+}
+
+/* Focus state */
+.form-group select.form-control:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25);
+}
+
+/* Disabled state */
+.form-group select.form-control:disabled {
+  background: rgba(255, 255, 255, 0.06);
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Invalid (same as input) */
+select.ng-invalid.ng-touched {
+  border: 1px solid #dc3545;
+  animation: shake 0.15s;
+}
