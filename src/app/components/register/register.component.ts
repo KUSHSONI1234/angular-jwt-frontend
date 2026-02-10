@@ -1,6 +1,17 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  ViewChild,
+  OnInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
@@ -8,75 +19,80 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
-export class RegisterComponent implements AfterViewInit {
+export class RegisterComponent implements OnInit, AfterViewInit {
+
   @ViewChild('firstNameInput') firstNameInput!: ElementRef<HTMLInputElement>;
 
-  registerData = {
-    firstName: '',
-    lastName: '',
-    username: '',
-    email: '',
-    password: '',
-  };
-
-  showRegisterPassword: boolean = false;
+  registerForm!: FormGroup;
+  showRegisterPassword = false;
 
   constructor(
+    private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private toastr: ToastrService,
+    private toastr: ToastrService
   ) {}
 
-  ngAfterViewInit() {
+  ngOnInit(): void {
+    this.registerForm = this.fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+    });
+  }
+
+  ngAfterViewInit(): void {
     this.firstNameInput.nativeElement.focus();
   }
 
-  toggleRegisterPassword() {
+  toggleRegisterPassword(): void {
     this.showRegisterPassword = !this.showRegisterPassword;
   }
 
-  onRegister(form: NgForm) {
-    if (form.invalid) {
+  onRegister(): void {
+    if (this.registerForm.invalid) {
+      this.registerForm.markAllAsTouched();
       this.toastr.warning('Please fill all required fields', 'Warning');
       return;
     }
 
-    this.authService.register(this.registerData).subscribe({
+    const payload = this.registerForm.value;
+
+    this.authService.register(payload).subscribe({
       next: (res: any) => {
-        // ✅ Successful registration (201)
         this.toastr.success(
           res?.message || 'Registration successful',
-          'Success',
+          'Success'
         );
 
         setTimeout(() => {
           this.router.navigate(['/login']);
         }, 1500);
       },
-
       error: (err) => {
-        //  User already exists → redirect to login
         if (err.status === 409) {
           this.toastr.info(
             err?.error?.message ||
               'User already exists. Redirecting to login...',
-            'Info',
+            'Info'
           );
-
-          setTimeout(() => {
-            this.router.navigate(['/login']);
-          }, 1500);
+          setTimeout(() => this.router.navigate(['/login']), 1500);
         } else if (err.status === 400) {
           this.toastr.error(
             err?.error?.message || 'Invalid registration data',
-            'Error',
+            'Error'
           );
         } else {
-          this.toastr.error('Something went wrong. Please try again.', 'Error');
+          this.toastr.error(
+            'Something went wrong. Please try again.',
+            'Error'
+          );
         }
       },
     });

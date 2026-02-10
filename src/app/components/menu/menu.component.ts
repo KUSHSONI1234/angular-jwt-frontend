@@ -11,19 +11,20 @@ import {
   PageEvent,
 } from '@angular/material/paginator';
 import { debounceTime, Subject } from 'rxjs';
+import { MenuService } from '../../services/menu.service';
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  imports: [FormsModule, CommonModule, RouterLink, MatPaginatorModule],
-  styleUrls: ['./user.component.css'],
+  selector: 'app-menu',
+  imports: [FormsModule, CommonModule, RouterLink, MatPaginator],
+  templateUrl: './menu.component.html',
+  styleUrl: './menu.component.css',
 })
-export class UserComponent implements OnInit {
+export class MenuComponent {
   users: any[] = [];
   roles: any[] = [];
   loggedInRoleLevel = Number(localStorage.getItem('roleLevel'));
   searchText: string = ''; // <-- Add this line
-
+  menus: any[] = [];
   loading = false;
   searchSubject = new Subject<string>();
 
@@ -39,13 +40,14 @@ export class UserComponent implements OnInit {
     private roleService: RoleService,
     private router: Router,
     private toastr: ToastrService,
+    private menuService: MenuService,
   ) {}
 
   ngOnInit(): void {
-    this.getRoles();
+    this.getMenus();
 
     this.searchSubject
-      .pipe(debounceTime(300)) // wait 300ms after typing stops
+      .pipe(debounceTime(300)) 
       .subscribe(() => {
         this.pageNumber = 1;
         this.getUsers();
@@ -53,14 +55,25 @@ export class UserComponent implements OnInit {
   }
 
   // Get roles first
-  getRoles() {
-    this.roleService.getAllRoles().subscribe({
+  // getRoles() {
+  //   this.roleService.getAllRoles().subscribe({
+  //     next: (res: any) => {
+  //       this.roles = res.data;
+  //       this.getUsers(); // fetch users after roles loaded
+  //     },
+  //     error: () => {
+  //       this.toastr.error('Failed to fetch roles');
+  //     },
+  //   });
+  // }
+
+  getMenus() {
+    this.menuService.getMenus().subscribe({
       next: (res: any) => {
-        this.roles = res.data;
-        this.getUsers(); // fetch users after roles loaded
+        this.menus = res.data;
       },
       error: () => {
-        this.toastr.error('Failed to fetch roles');
+        this.toastr.error('Failed to fetch menus');
       },
     });
   }
@@ -76,7 +89,7 @@ export class UserComponent implements OnInit {
     const payload = {
       pageNumber: this.pageNumber,
       pageSize: this.pageSize,
-      searchText: this.searchText // <-- Send search text to backend
+      searchText: this.searchText, // <-- Send search text to backend
     };
 
     this.userService.getUsersWithPagination(payload).subscribe({
@@ -110,38 +123,43 @@ export class UserComponent implements OnInit {
     this.getUsers();
   }
 
-  toggleStatus(user: any) {
-    if (!user.id) return;
+  toggleStatus(menu: any) {
+    if (!menu.id) return;
 
-    const action = user.isActive ? 'block' : 'activate';
-    if (!confirm(`Are you sure you want to ${action} this user?`)) return;
+    const action = menu.isActive ? 'deactivate' : 'activate';
+    if (!confirm(`Are you sure you want to ${action} this menu?`)) return;
 
-    this.userService.toggleUserStatus(user.id).subscribe({
+    this.menuService.toggleStatus(menu.id).subscribe({
       next: (res: any) => {
-        user.isActive = res.data.isActive;
+        if (res.success) {
+          // flip UI value
+          menu.isActive = !menu.isActive;
+        } else {
+          this.toastr.error(res.message);
+        }
       },
       error: () => this.toastr.error('Failed to toggle status'),
     });
   }
 
-  deleteUser(user: any) {
-    if (!user.id) return;
-    if (!confirm('Are you sure you want to delete this user?')) return;
+  deleteUser(menu: any) {
+    if (!menu.id) return;
+    if (!confirm('Are you sure you want to delete this menu?')) return;
 
-    this.userService.deleteUser(user.id).subscribe({
+    this.menuService.deleteMenu(menu.id).subscribe({
       next: () => {
         this.toastr.success('User deleted successfully');
         this.getUsers(); // refresh current page
       },
-      error: () => this.toastr.error('Failed to delete user'),
+      error: () => this.toastr.error('Failed to delete menu'),
     });
   }
 
-  viewUser(user: any) {
-    this.router.navigate([`/dashboard/users/view/${user.id}`]);
+  viewUser(menu: any) {
+    this.router.navigate([`/dashboard/menu/view/${menu.id}`]);
   }
 
-  editUser(user: any) {
-    this.router.navigate([`/dashboard/users/edit/${user.id}`]);
+  editUser(menu: any) {
+    this.router.navigate([`/dashboard/menu/edit/${menu.id}`]);
   }
 }

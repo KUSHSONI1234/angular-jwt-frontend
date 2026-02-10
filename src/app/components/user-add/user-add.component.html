@@ -5,7 +5,7 @@
 </h2>
 
 <div class="form-wrapper">
-  <form class="user-form" #userForm="ngForm" (ngSubmit)="onSave()">
+  <form class="user-form" [formGroup]="userForm" (ngSubmit)="onSave()">
     <!-- First & Last Name -->
     <div class="form-row">
       <div class="form-group">
@@ -13,16 +13,17 @@
         <input
           type="text"
           placeholder="Enter first name"
-          name="firstName"
-          [(ngModel)]="userData.firstName"
-          required
-          #firstName="ngModel"
-          #firstNameInput
+          formControlName="firstName"
           [readonly]="mode === 'view'"
+          #firstNameInput
         />
         <small
           class="error"
-          *ngIf="firstName.touched && firstName.invalid && mode !== 'view'"
+          *ngIf="
+            userForm.get('firstName')?.touched &&
+            userForm.get('firstName')?.hasError('required') &&
+            mode !== 'view'
+          "
         >
           First name is required
         </small>
@@ -33,15 +34,16 @@
         <input
           type="text"
           placeholder="Enter last name"
-          name="lastName"
-          [(ngModel)]="userData.lastName"
-          required
-          #lastName="ngModel"
+          formControlName="lastName"
           [readonly]="mode === 'view'"
         />
         <small
           class="error"
-          *ngIf="lastName.touched && lastName.invalid && mode !== 'view'"
+          *ngIf="
+            userForm.get('lastName')?.touched &&
+            userForm.get('lastName')?.hasError('required') &&
+            mode !== 'view'
+          "
         >
           Last name is required
         </small>
@@ -55,15 +57,16 @@
         <input
           type="text"
           placeholder="Enter username"
-          name="username"
-          [(ngModel)]="userData.username"
-          required
-          #username="ngModel"
+          formControlName="username"
           [readonly]="mode === 'view'"
         />
         <small
           class="error"
-          *ngIf="username.touched && username.invalid && mode !== 'view'"
+          *ngIf="
+            userForm.get('username')?.touched &&
+            userForm.get('username')?.hasError('required') &&
+            mode !== 'view'
+          "
         >
           Username is required
         </small>
@@ -74,23 +77,23 @@
         <input
           type="email"
           placeholder="Enter email address"
-          name="email"
-          [(ngModel)]="userData.email"
-          required
-          email
-          #email="ngModel"
+          formControlName="email"
           [readonly]="mode === 'view'"
         />
         <small
           class="error"
-          *ngIf="email.touched && email.invalid && mode !== 'view'"
+          *ngIf="
+            userForm.get('email')?.touched &&
+            userForm.get('email')?.invalid &&
+            mode !== 'view'
+          "
         >
           Enter a valid email
         </small>
       </div>
     </div>
 
-    <!-- Password (only for add/edit) -->
+    <!-- Password -->
     <div class="form-group password-group">
       <label>Password</label>
 
@@ -98,8 +101,7 @@
         <input
           [type]="showPassword ? 'text' : 'password'"
           placeholder="********"
-          name="password"
-          [(ngModel)]="userData.password"
+          formControlName="password"
           [readonly]="mode === 'view'"
         />
 
@@ -111,6 +113,17 @@
           {{ showPassword ? "Hide" : "Show" }}
         </span>
       </div>
+
+      <small
+        class="error"
+        *ngIf="
+          userForm.get('password')?.touched &&
+          userForm.get('password')?.hasError('required') &&
+          mode === 'add'
+        "
+      >
+        Password is required
+      </small>
     </div>
 
     <!-- Role -->
@@ -118,9 +131,7 @@
       <label>Role</label>
       <select
         class="form-control"
-        name="roleId"
-        [(ngModel)]="userData.roleId"
-        required
+        formControlName="roleId"
         [disabled]="mode === 'view'"
       >
         <option [ngValue]="null">-- Select Role --</option>
@@ -135,7 +146,11 @@
 
       <small
         class="error"
-        *ngIf="userForm.submitted && !userData.roleId && mode !== 'view'"
+        *ngIf="
+          userForm.get('roleId')?.touched &&
+          userForm.get('roleId')?.hasError('required') &&
+          mode !== 'view'
+        "
       >
         Role is required
       </small>
@@ -143,7 +158,7 @@
 
     <!-- Actions -->
     <div class="form-actions">
-      <button type="button" class="btn-secondary" routerLink="/dashboard/users">
+      <button type="button" class="btn-secondary" (click)="onCancel()">
         {{ mode === "view" ? "Back" : "Cancel" }}
       </button>
 
@@ -156,5 +171,6 @@
         {{ mode === "add" ? "Save User" : "Update User" }}
       </button>
     </div>
+    
   </form>
 </div>

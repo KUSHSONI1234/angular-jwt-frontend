@@ -41,5 +41,8 @@ export class RoleService {
     return this.http.put<any>(`${this.apiUrl}/${id}/toggle-status`, null);
   }
 
-  
+  // PAGINATED ROLES
+  getRolesWithPagination(payload: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/GetRolesWithPagination`, payload);
+  }
 }

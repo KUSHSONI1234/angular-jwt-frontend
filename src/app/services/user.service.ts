@@ -47,7 +47,14 @@ export class UserService {
   }
 
   // GET ROLES FOR DROPDOWN
-  getRolesDropdown(): Observable<any> {
+  getRolesForDropdown(): Observable<any> {
     return this.http.get('http://localhost:5048/api/roles/dropdown');
+  }
+
+  getUsersWithPagination(payload: {
+    pageNumber: number;
+    pageSize: number;
+  }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/GetUsersWithPagination`, payload);
   }
 }

@@ -5,58 +5,66 @@
 </h2>
 
 <div class="form-wrapper">
-  <form class="user-form" #roleForm="ngForm" (ngSubmit)="onSave()">
+  <form class="user-form" [formGroup]="roleForm" (ngSubmit)="onSave()">
+    <!-- ROLE NAME -->
     <div class="form-group">
       <label>Role Name</label>
+
       <input
         type="text"
         placeholder="Enter role name"
-        name="roleName"
-        [(ngModel)]="roleData.roleName"
-        required
-        #roleName="ngModel"
-        #roleNameInput
-        [readonly]="mode === 'view'"
+        formControlName="roleName"
+        [readonly]="mode === 'view'" #roleNameInput
       />
 
       <small
         class="error"
-        *ngIf="roleName.touched && roleName.invalid && mode !== 'view'"
+        *ngIf="
+          f['roleName'].touched &&
+          f['roleName'].errors?.['required'] &&
+          mode !== 'view'
+        "
       >
         Role name is required
       </small>
     </div>
 
+    <!-- LEVEL -->
     <div class="form-group">
       <label>Level</label>
+
       <input
         type="number"
         placeholder="Enter level"
-        name="level"
-        [(ngModel)]="roleData.level"
-        required
-        #level="ngModel"
+        formControlName="level"
         [readonly]="mode === 'view'"
       />
 
       <small
         class="error"
-        *ngIf="roleName.touched && roleName.invalid && mode !== 'view'"
+        *ngIf="
+          f['level'].touched &&
+          f['level'].errors?.['required'] &&
+          mode !== 'view'
+        "
       >
         Level is required
       </small>
     </div>
 
+    <!-- FORM ACTIONS -->
     <div class="form-actions">
+      <!-- CANCEL / BACK -->
       <button type="button" class="btn-secondary" routerLink="/dashboard/roles">
         {{ mode === "view" ? "Back" : "Cancel" }}
       </button>
 
+      <!-- SAVE / UPDATE -->
       <button
         type="submit"
         class="btn-primary"
-        [disabled]="roleForm.invalid"
         *ngIf="mode !== 'view'"
+        [disabled]="roleForm.invalid"
       >
         {{ mode === "add" ? "Save Role" : "Update Role" }}
       </button>

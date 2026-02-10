@@ -61,7 +61,7 @@
 /* LAYOUT */
 .dashboard-layout {
   display: flex;
-  height: calc(100vh - 64px); /* navbar height */
+  height: 120vh;
   background: radial-gradient(circle at top, #020617, #000);
 }
 
@@ -275,8 +275,50 @@
   color: #fff;
 }
 
-
 .sidebar-menu li.active > a {
   background-color: #5b5ce2;
   color: white;
 }
+
+.menu-icon {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.sub-menu-icon {
+  font-size: 18px;
+  margin-right: 8px;
+}
+
+.sidebar-menu li a,
+.dropdown-toggle {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.menu-title {
+  display: flex;
+  align-items: center;
+}
+
+.arrow {
+  margin-left: auto;
+  transition: transform 0.3s ease;
+}
+
+.arrow.rotate {
+  transform: rotate(180deg);
+}
+
+/* ACTIVE PARENT MENU */
+.sidebar-menu li.active .dropdown-toggle {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: #fff;
+}
+.sidebar-menu li.active .menu-title {
+  color: #fff;
+}
+
+
+

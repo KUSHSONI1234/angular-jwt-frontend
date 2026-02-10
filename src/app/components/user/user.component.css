@@ -144,3 +144,159 @@
   font-size: 18px;
   line-height: 1;
 }
+
+
+
+.paginator-container {
+  margin-top: 18px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #0f172a, #020617);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+::ng-deep .mat-mdc-paginator {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  color: #cbd5f5;
+  font-size: 13px;
+}
+
+::ng-deep .mat-mdc-paginator-page-size {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+::ng-deep .mat-mdc-paginator-page-size-label {
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+
+::ng-deep .mat-mdc-select {
+  background: #020617;
+  border-radius: 8px;
+  padding: 2px 6px;
+}
+
+::ng-deep .mat-mdc-select-value {
+  color: #e0e7ff;
+  font-weight: 600;
+}
+
+::ng-deep .mat-mdc-select-arrow {
+  color: #60a5fa;
+}
+
+::ng-deep .mat-mdc-paginator-range-label {
+  color: #94a3b8;
+  font-weight: 500;
+  margin: 0 12px;
+  white-space: nowrap;
+}
+
+::ng-deep .mat-mdc-paginator-navigation {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+::ng-deep .mat-mdc-paginator-navigation-button {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: #020617;
+  color: #93c5fd;
+  transition: all 0.2s ease;
+}
+
+::ng-deep .mat-mdc-paginator-navigation-button:hover:not([disabled]) {
+  background: #1e293b;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+::ng-deep .mat-mdc-paginator-navigation-button[disabled] {
+  opacity: 0.35;
+  background: #020617;
+}
+
+
+::ng-deep .cdk-overlay-pane .mat-mdc-select-panel {
+  background-color: #020617 !important;
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+  padding: 6px 0;
+}
+
+::ng-deep .cdk-overlay-pane .mat-mdc-option {
+  color: #e0e7ff !important;
+  font-weight: 500;
+  min-height: 40px;
+}
+
+::ng-deep .cdk-overlay-pane .mat-mdc-option:hover {
+  background-color: #1e293b !important;
+}
+
+::ng-deep .cdk-overlay-pane .mat-mdc-option.mdc-list-item--selected {
+  background-color: rgba(96, 165, 250, 0.15) !important;
+  color: #93c5fd !important;
+}
+
+::ng-deep .cdk-overlay-pane .mat-mdc-option .mdc-list-item__primary-text {
+  color: inherit;
+}
+
+
+@media (max-width: 768px) {
+  ::ng-deep .mat-mdc-paginator {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+
+
+/* Search bar inside table (small and right-aligned) */
+.table-search {
+  position: relative;
+  margin-bottom: 12px;
+  width: fit-content;   /* Shrinks to input width */
+  margin-left: auto;    /* Pushes it to the right */
+}
+
+.table-search input {
+  width: 220px;         /* Smaller width */
+  padding: 8px 36px 8px 12px;
+  border-radius: 10px;
+  border: 1px solid #1e293b;
+  background: #020617;
+  color: #e0e7ff;
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+.table-search input::placeholder {
+  color: #94a3b8;
+  font-weight: 400;
+}
+
+.table-search input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+.table-search .search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+  font-size: 18px;
+  pointer-events: none;
+}

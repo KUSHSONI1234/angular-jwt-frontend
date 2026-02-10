@@ -1,7 +1,9 @@
-<div class="page-header">
-  <h2 class="page-title">User List</h2>
+<!-- <p>menu works!</p> -->
 
-  <button class="create-btn" routerLink="/dashboard/users/add">
+<div class="page-header">
+  <h2 class="page-title">Menu List</h2>
+
+  <button class="create-btn" routerLink="/dashboard/menu/add">
     <span class="plus">+</span>
     Create New
   </button>
@@ -21,9 +23,9 @@
   <table class="user-table">
     <thead>
       <tr>
-        <th>Username</th>
-        <th>Email</th>
-        <th>Role</th>
+        <th>MenuName</th>
+        <th>Sorting</th>
+        <th>MenuType</th>
         <th>Status</th>
         <th class="actions-col">Actions</th>
       </tr>
@@ -34,47 +36,48 @@
         <td colspan="4" style="text-align: center">Loading users...</td>
       </tr>
 
-      <tr *ngFor="let user of users">
-        <td>{{ user.username }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.roleName }}</td>
+      <tr *ngFor="let menu of menus">
+        <td>{{ menu.menuName }}</td>
+        <td>{{ menu.sorting }}</td>
+        <td>{{ menu.menuType }}</td>
 
         <!-- <td>{{ user.roleName }}</td> -->
         <td>
           <span
             class="status"
-            [ngClass]="user.isActive ? 'active' : 'blocked'"
-            (click)="toggleStatus(user)"
+            [ngClass]="menu.isActive ? 'active' : 'blocked'"
+            (click)="toggleStatus(menu)"
             style="cursor: pointer"
             title="Click to toggle status"
           >
-            {{ user.isActive ? "Active" : "Blocked" }}
+            {{ menu.isActive ? "Active" : "Blocked" }}
           </span>
         </td>
+
         <td class="actions">
           <span
             class="material-icons icon view"
             title="View"
-            (click)="viewUser(user)"
+            (click)="viewUser(menu)"
             >visibility</span
           >
           <span
             class="material-icons icon edit"
             title="Edit"
-            (click)="editUser(user)"
+            (click)="editUser(menu)"
             >edit</span
           >
           <span
             class="material-icons icon delete"
             title="Delete"
-            (click)="deleteUser(user)"
+            (click)="deleteUser(menu)"
             >delete</span
           >
         </td>
       </tr>
 
-      <tr *ngIf="!loading && users.length === 0">
-        <td colspan="4" style="text-align: center">No users found</td>
+      <tr *ngIf="!loading && menus.length === 0">
+        <td colspan="4" style="text-align: center">No menus found</td>
       </tr>
     </tbody>
   </table>

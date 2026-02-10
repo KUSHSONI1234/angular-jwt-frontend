@@ -18,27 +18,54 @@
 <div class="dashboard-layout">
   <aside class="sidebar">
     <ul class="sidebar-menu">
-      <!-- DASHBOARD -->
       <li [ngClass]="{ active: router.url === '/dashboard' }">
-        <a routerLink="/dashboard">Dashboard</a>
+        <a routerLink="/dashboard">
+          <i class="mdi mdi-view-dashboard menu-icon"></i>
+          <span>Dashboard</span>
+        </a>
       </li>
 
-      <!-- MASTER -->
       <li>
         <div class="dropdown-toggle" (click)="toggleMaster()">
-          Master
+          <div class="menu-title">
+            <i class="mdi mdi-cards-variant menu-icon"></i>
+            <span>Master</span>
+          </div>
           <span class="arrow" [class.rotate]="isMasterOpen">▾</span>
         </div>
 
         <ul class="dropdown-menu" [class.open]="isMasterOpen">
-          <!-- Users -->
-          <li [ngClass]="{ active: router.url === '/dashboard/users' }">
-            <a routerLink="/dashboard/users">Users</a>
+          <li [ngClass]="{ active: router.url.startsWith('/dashboard/users') }">
+            <a routerLink="/dashboard/users">
+              <i class="mdi mdi-account-multiple-outline sub-menu-icon"></i>
+              <span>Users</span>
+            </a>
           </li>
 
-          <!-- Roles -->
-          <li [ngClass]="{ active: router.url === '/dashboard/roles' }">
-            <a routerLink="/dashboard/roles">Roles</a>
+          <li [ngClass]="{ active: router.url.startsWith('/dashboard/roles') }">
+            <a routerLink="/dashboard/roles">
+              <i class="mdi mdi-shield-account-outline sub-menu-icon"></i>
+              <span>Roles</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <div class="dropdown-toggle" (click)="toggleUtils()">
+          <div class="menu-title">
+            <i class="mdi mdi-tools menu-icon"></i>
+            <span>Utils</span>
+          </div>
+          <span class="arrow" [class.rotate]="isUtilsOpen">▾</span>
+        </div>
+
+        <ul class="dropdown-menu" [class.open]="isUtilsOpen">
+          <li [ngClass]="{ active: router.url.startsWith('/dashboard/menu') }">
+            <a routerLink="/dashboard/menu">
+              <i class="mdi mdi-cog-outline sub-menu-icon"></i>
+              <span>Menu</span>
+            </a>
           </li>
         </ul>
       </li>
@@ -49,3 +76,4 @@
     <router-outlet></router-outlet>
   </main>
 </div>
+

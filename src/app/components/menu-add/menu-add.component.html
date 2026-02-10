@@ -1,0 +1,118 @@
+<div class="form-wrapper">
+  <div class="form-title">
+    {{
+      mode === "add" ? "Add Menu" : mode === "edit" ? "Edit Menu" : "View Menu"
+    }}
+  </div>
+
+  <form class="user-form" [formGroup]="menuForm" (ngSubmit)="onSubmit()">
+    <!-- Menu Type -->
+    <div class="form-group">
+      <label>Menu Type</label>
+      <select formControlName="menuType">
+        <option value="" disabled>Select Type</option>
+        <option [value]="1">Master Menu</option>
+        <option [value]="2">Sub Menu</option>
+      </select>
+    </div>
+
+    <!-- Menu Name -->
+    <div class="form-group" *ngIf="menuForm.value.menuType">
+      <label>Menu Name</label>
+      <input
+        type="text"
+        formControlName="menuName"
+        placeholder="Enter menu name"
+        #MenuNameInput
+      />
+      <span
+        class="error"
+        *ngIf="f['menuName'].touched && f['menuName'].invalid"
+      >
+        Menu name is required
+      </span>
+    </div>
+
+    <!-- link -->
+    <div class="form-group">
+      <label>Link</label>
+      <input
+        type="text"
+        formControlName="link"
+        placeholder="Enter route link (/dashboard)"
+      />
+      <span class="error" *ngIf="f['link'].touched && f['link'].invalid">
+        Link is required
+      </span>
+    </div>
+
+    <div class="form-group">
+      <label>Icon</label>
+      <input
+        type="text"
+        formControlName="icon"
+        placeholder="Enter icon class (fa fa-home)"
+      />
+      <span class="error" *ngIf="f['icon'].touched && f['icon'].invalid">
+        Icon is required
+      </span>
+    </div>
+
+    <!-- MASTER MENU FIELDS -->
+    <div *ngIf="menuForm.value.menuType == 1">
+      <!-- Icon -->
+
+      <!-- Sorting Order -->
+      <div class="form-group">
+        <label>Sorting Order</label>
+        <input
+          type="number"
+          formControlName="sortingOrder"
+          placeholder="Enter order"
+        />
+      </div>
+    </div>
+
+    <!-- SUB MENU FIELDS -->
+    <div *ngIf="menuForm.value.menuType == 2">
+      <!-- Link -->
+
+      <!-- Parent ID -->
+      <div class="form-group">
+        <label>Parent Menu</label>
+        <select class="form-control" formControlName="parentId">
+          <option value="">Select Parent Menu</option>
+          <option *ngFor="let item of parentMenus" [value]="item.id">
+            {{ item.menuName }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Sorting Order -->
+      <div class="form-group">
+        <label>Sorting Order</label>
+        <input
+          type="number"
+          formControlName="sortingOrder"
+          placeholder="Enter order"
+        />
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="form-actions">
+      <button
+        *ngIf="mode !== 'view'"
+        type="submit"
+        class="btn-primary"
+        [disabled]="menuForm.invalid"
+      >
+        Save
+      </button>
+
+      <button type="button" class="btn-secondary" (click)="onCancel()">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
